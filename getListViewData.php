@@ -106,6 +106,12 @@ include("timeout.php");
         $key += 1;
        	$record[$key] = $rst[$val];
        }
+
+    if($ModuleName == "Room"){
+      $roomInvitesLink = "<a href='#' title='Invite Users' class='ml-1'><i class='fa fa-user-plus'></i></a>";
+      $openRoomLink = "<a href='#' title='Join Room' class='ml-1'><i class='fa fa-video-camera'></i></a>";
+      $record[count($cols)+2]=$openRoomLink.$roomInvitesLink;
+    }
        
     $recdata[] = $record;
     $getdata->MoveNext();

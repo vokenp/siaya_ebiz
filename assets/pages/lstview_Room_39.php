@@ -44,9 +44,10 @@ $getCols = $db->GetArray("select FieldName,DisplayName,searchable from dh_listvi
       $dFields[] = $val["DisplayName"]; 
       $gdata[] = $val["FieldName"]; 
       $tIndex += 1;
-      $dCols[] = array("targets" => $tIndex, "title" => $val["DisplayName"],"name" => $val["FieldName"],"searchable" => $searchable);
-       $exportCols[$tIndex] = $tIndex;
+      $dCols[] = array("targets" => $tIndex, "title" => $val["DisplayName"],"name" => $val["FieldName"],"searchable" => $searchable); 
+      $exportCols[$tIndex] = $tIndex;
      }
+     $dCols[] = array("targets" => $tIndex+1, "visible" => true,"sortable" => false,"searchable" => false,"title"=>"Actions","name" => "Actions");
      
      $Excol = array();
      $Excol["columns"] = array_keys($exportCols);
@@ -93,6 +94,11 @@ $getCols = $db->GetArray("select FieldName,DisplayName,searchable from dh_listvi
    
       
 ?>
+<style>
+.ml-1 {
+    margin-left: 3px;
+}
+</style>
 <input type="hidden" name="userType" id="userType" value="<?php echo $UserType;?>">
 <div class="widget-box">
     <div class="widget-header widget-header-flat">
