@@ -108,8 +108,11 @@ include("timeout.php");
        }
 
     if($ModuleName == "Room"){
+      $roomUrl = str_replace('&view=list','&view=conference', $modUrl);
+      $roomUrl = str_replace('&view=edit','&view=conference', $roomUrl);
+      $roomUrl = str_replace('&sk',"&cid=$S_ROWID&sk", $roomUrl);
       $roomInvitesLink = "<a href='#' title='Invite Users' class='ml-1'><i class='fa fa-user-plus'></i></a>";
-      $openRoomLink = "<a href='#' title='Join Room' class='ml-1'><i class='fa fa-video-camera'></i></a>";
+      $openRoomLink = "<a href='$roomUrl' title='Join Room' class='ml-1'><i class='fa fa-video-camera'></i></a>";
       $record[count($cols)+2]=$openRoomLink.$roomInvitesLink;
     }
        

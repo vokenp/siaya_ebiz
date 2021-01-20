@@ -107,6 +107,13 @@ $(document).ready(function() {
                          </div>
                      </div>
                      <div class="form-group col-sm-5">
+                         <label class="col-sm-4 control-label " for="Password"> Room Password </label>
+                         <div class="col-sm-8">
+                             <input type="password" id="Password" name="Password" placeholder="Enter room password"
+                                 class="col-xs-12 col-sm-12" value="<?php echo $rst['Password'];?>" required="true" />
+                         </div>
+                     </div>
+                     <div class="form-group col-sm-5">
                          <label class="col-sm-4 control-label " for="ScheduleDate"> Schedule On </label>
                          <div class="col-sm-8">
                              <div class="input-group col-xs-12 col-sm-12">

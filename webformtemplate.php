@@ -1,13 +1,12 @@
-
 <script type="text/javascript">
-  $(document).ready(function(){
+$(document).ready(function() {
     $(document).on('keyup keypress', 'form input[type="text"]', function(e) {
-if(e.which == 13) {
-e.preventDefault();
-return false;
-}
+        if (e.which == 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
 });
-  });
 </script>
 <?php 
   $app = filter_input(INPUT_GET, "app");
@@ -49,7 +48,7 @@ $EnableCreation = $rst["EnableCreation"];
     }
   }
 ?>
-  
+
 <?php 
     
      if ($app == "") {
@@ -82,22 +81,24 @@ $EnableCreation = $rst["EnableCreation"];
 
 
 <div class="page-header">
-  <h1>
-    <?php echo $ApplicationName;?>
-    <small>
-      <i class="ace-icon fa fa-angle-double-right"></i>
-      <?php echo $modName;?>
-    </small>
-    <span class="pull-right"><a href="#" data-toggle="modal" data-target="#modal-helpContext" title="<?php echo "Know more about ".$modName;?>">Help <i class="ace-icon fa fa fa-question-circle"></i></a></span>
-  </h1>
-  
+    <h1>
+        <?php echo $ApplicationName;?>
+        <small>
+            <i class="ace-icon fa fa-angle-double-right"></i>
+            <?php echo $modName;?>
+        </small>
+        <span class="pull-right"><a href="#" data-toggle="modal" data-target="#modal-helpContext"
+                title="<?php echo "Know more about ".$modName;?>">Help <i
+                    class="ace-icon fa fa fa-question-circle"></i></a></span>
+    </h1>
+
 </div><!-- /.page-header -->
 
 
- <div class="page-content">
-  <div class="row">
-    <div class="col-xs-12">
-      <?php 
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <?php 
    
    
   if ($op == "list") {
@@ -122,6 +123,10 @@ $EnableCreation = $rst["EnableCreation"];
           include("mnglistview.php");
         }
     }
+    else if($op == "conference"){
+      $conferenceRoom = "assets/pages/conferenceRoom.php";
+      include($conferenceRoom);
+    }
     else
     {
       $pageName = "assets/pages/cu_".$modCode.".php";
@@ -141,31 +146,31 @@ $EnableCreation = $rst["EnableCreation"];
     }
        
   ;?>
-     
-    </div><!-- End Col-xs-12 -->
-  </div><!-- End Row -->
+
+        </div><!-- End Col-xs-12 -->
+    </div><!-- End Row -->
 </div><!-- page-content -->
 
 
-  <div class="modal fade" id="modal-helpContext">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div class="modal-header bg-navy">
+<div class="modal fade" id="modal-helpContext">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-navy">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
+                    <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title"><?php echo $modName." Help Context"; ?></h4>
-              </div>
-              <div class="modal-body" style="overflow-y:auto;max-height:500px;">
-                  <?php echo $Helpcontext;?>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-default pull-right" data-dismiss="modal">Close</button>
-                
-              </div>
-              
             </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
+            <div class="modal-body" style="overflow-y:auto;max-height:500px;">
+                <?php echo $Helpcontext;?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-default pull-right" data-dismiss="modal">Close</button>
+
+            </div>
+
         </div>
-        <!-- /.modal -->
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

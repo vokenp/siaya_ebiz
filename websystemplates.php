@@ -1,25 +1,23 @@
-
-
-
-   <div class="page-content">
-     <div class="breadcrumbs ace-save-state" id="breadcrumbs">
-            <ul class="breadcrumb">
-              <li>
+<div class="page-content">
+    <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
                 <i class="ace-icon fa fa-gears"></i>
                 <b>System Settings</b>
-              </li>
-              <li>
-                 <button data-target="#sidebar2" data-toggle="collapse" type="button" class=" navbar-toggle collapsed"><span class="sr-only">Toggle sidebar</span>
+            </li>
+            <li>
+                <button data-target="#sidebar2" data-toggle="collapse" type="button"
+                    class=" navbar-toggle collapsed"><span class="sr-only">Toggle sidebar</span>
                     <i class="ace-icon fa fa-dashboard purple"></i></button>
-              </li>
-            </ul><!-- /.breadcrumb -->
-           
+            </li>
+        </ul><!-- /.breadcrumb -->
 
-          </div>
-  <div class="row m-0">
-    <div class="col-xs-12">
 
-      <?php 
+    </div>
+    <div class="row m-0">
+        <div class="col-xs-12">
+
+            <?php 
    if (!in_array($user, $rs->RoleUsers("SysManager"))) {
          include("pages/403.php");
          exit();
@@ -66,6 +64,10 @@
           include("mnglistview.php");
         }
     }
+    else if($op == "conference"){
+      $conferenceRoom = "assets/pages/conferenceRoom.php";
+      include($conferenceRoom);
+    }
     else
     {
       $pageName = "assets/pages/cu_".$ModuleCode.".php";
@@ -85,12 +87,7 @@
     }
        
   ;?>
-     
-    </div><!-- End Col-xs-12 -->
-  </div><!-- End Row -->
+
+        </div><!-- End Col-xs-12 -->
+    </div><!-- End Row -->
 </div><!-- page-content -->
-
-
-
-  
-  
