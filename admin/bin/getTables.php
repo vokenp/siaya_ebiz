@@ -2,6 +2,7 @@
 include("../../timeout.php");
  include("../../assets/bin/con_db.php");
 global $db;
+error_reporting(0);
 //$db->debug=1;
 
 $Tables = $db->metaTables('TABLES');
