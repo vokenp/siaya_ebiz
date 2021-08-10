@@ -3,7 +3,7 @@ include("timeout.php");
 include("assets/bin/con_db.php");
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
- 
+
 if (!isset($_SESSION['user'])) {
    header("location: ulogin.php");
 }
@@ -25,7 +25,7 @@ $user = USERID;
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
-		<title>AssemblyDocs</title>
+		<title>Assembly E-Business</title>
         	<link href="assets/images/favi.png" rel="shortcut icon" type="image/vnd.microsoft.icon" />
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -48,9 +48,9 @@ $user = USERID;
 		<!--[if lte IE 9]>
 			<link rel="stylesheet" href="assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
 		<![endif]-->
-		
+
 		<link rel="stylesheet" href="assets/css/chosen.min.css" />
-		<link rel="stylesheet" href="assets/css/bootstrap-select.css" />       
+		<link rel="stylesheet" href="assets/css/bootstrap-select.css" />
 		<link rel="stylesheet" href="assets/css/ace-skins.min.css" />
 		<link rel="stylesheet" href="assets/css/ace-rtl.min.css" />
 		<link rel="stylesheet" href="assets/css/dataTables.checkboxes.css" />
@@ -59,7 +59,7 @@ $user = USERID;
 		<link rel="stylesheet" href="assets/css/daterangepicker.min.css" />
 		<link rel="stylesheet" href="assets/css/bootstrap-datetimepicker.min.css" />
 		<link rel="stylesheet" href="assets/css/croppie.css" />
-     
+
 
 		<!--[if lte IE 9]>
 		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
@@ -88,8 +88,8 @@ $user = USERID;
 		<script src="assets/js/jquery.flot.min.js"></script>
 		<script src="assets/js/jquery.flot.pie.min.js"></script>
 		<script src="assets/js/jquery.flot.resize.min.js"></script> -->
-		
-        
+
+
 
         <script src="assets/js/jquery.dataTables.min.js"></script>
 		<script src="assets/js/jquery.dataTables.bootstrap.min.js"></script>
@@ -108,21 +108,21 @@ $user = USERID;
 		<script src="assets/js/chosen.jquery.min.js"></script>
 		<script src="assets/js/autosize.min.js"></script>
 		<script src="assets/js/bootstrap-tag.min.js"></script>
-        
+
         <script src="assets/js/bootstrap-datepicker.min.js"></script>
 		<script src="assets/js/bootstrap-timepicker.min.js"></script>
 		<script src="assets/js/moment.min.js"></script>
 		<script src="assets/js/daterangepicker.min.js"></script>
 		<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
 		<script src="assets/js/jquery.maskedinput.min.js"></script>
-		
+
 		<script src="assets/js/jquery.jqGrid.min.js"></script>
 		<script src="assets/js/grid.locale-en.js"></script>
 		<script src="assets/js/croppie.js"></script>
         <script src="assets/js/fullcalendar.min.js"></script>
 		<script src="assets/js/bootbox.js"></script>
 
-		
+
         <script src="assets/plugins/ckeditor/ckeditor.js"></script>
 		<!-- ace scripts -->
 		<script src="assets/js/ace-elements.min.js"></script>
@@ -155,8 +155,8 @@ $user = USERID;
 
 			<div class="main-content">
             <div class="main-content-inner">
-				<?php  
-        
+				<?php
+
        switch ($app) {
         case 2:
            include("websystemplates.php");
@@ -168,8 +168,8 @@ $user = USERID;
            include("webformtemplate.php");
            break;
        }
-       
-     ?>					
+
+     ?>
 
 			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
 				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>

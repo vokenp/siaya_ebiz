@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
-		<title>Login - AssemblyDocs</title>
+		<title>Login - Assembly E-Business</title>
 		<link href="assets/images/favi.png" rel="shortcut icon" type="image/vnd.microsoft.icon" />
 		<meta name="description" content="User login page" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -48,7 +48,7 @@
 <div class="space-6"></div>
 
 <div class="position-relative">
-	
+
 
 <div id="login-box" class="login-box visible widget-box no-border">
 	<div class="widget-body">
@@ -76,14 +76,14 @@
 						</span>
 					</label>
 
-					
-					
+
+
 
 					<div class="clearfix">
                         <button type="submit" name="btnLogin" class="button btn btn-primary btn-normal pull-right"> <i class="ace-icon fa fa-key"></i> Sign In</button>
 					</div>
 
-				
+
 					<div class="space-4"></div>
 
 
@@ -103,7 +103,7 @@
 				</a>
 			</div>
 
-			
+
 		</div>
 	</div><!-- /.widget-body -->
 </div><!-- /.login-box -->
@@ -209,15 +209,15 @@
                 pswd: "required",
                 },
                 messages: {
-                
+
                 },
                 submitHandler: function(form) {
                 // do other stuff for a valid form
                 //showLoader();
-               
-                $.post('assets/bin/login.php', $("#frmlogin").serialize(), 
+
+                $.post('assets/bin/login.php', $("#frmlogin").serialize(),
                 function(data) {
-                    
+
                 if(data.length < 15)
                 {
                   // alert(data);
@@ -226,7 +226,7 @@
                   $('#alert').fadeOut(200);
                 }else
                 {
-                 
+
                     $('#error_box').fadeIn(200);
                     $('#error_box').html(data);
                     clearForm('#frmlogin');
@@ -236,10 +236,10 @@
                 }
                 });
 	});
-			
-			
-			
-			
+
+
+
+
 		</script>
 	</body>
 </html>

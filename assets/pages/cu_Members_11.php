@@ -8,11 +8,11 @@ $TableName = "committemembers";
   if ($op == "add") {
     $S_ROWID = "";
     $cid = "";
-   
+
     $btn = "<button type='submit' name='btnSaveRecord' id='btnSaveRecord' class='btn btn-sm btn-success' value='$TableName'><i class='fa fa-edit'></i> Save Record</button>";
     $getColumns = $db->metaColumnNames($TableName);
     foreach ($getColumns as $key => $value) {
-       $rst[$value] = "";  
+       $rst[$value] = "";
     }
   }
   else
@@ -30,35 +30,35 @@ $rst = $rs->row($TableName,"S_ROWID='$cid'");
 
 $S_ROWID = "<input type='hidden' name='S_ROWID' id='S_ROWID' value='$cid'>";
 $btn = "<button type='submit' name='btnUpdateRecord' id='btnUpdateRecord' class='btn btn-sm btn-success' value='$TableName'><i class='fa fa-edit'></i> Update Record</button>";
-   
+
   }
-  
+
   ?>
 <script type="text/javascript">
 	$(document).ready(function(){
 		var op = $("#op").val();
-         if (op == "edit") 
+         if (op == "edit")
          {
          	$("#PersonnelNo").prop("disabled",false);
          }
 
-		
+
 		$("#frmPageTemp").validate({
 				debug: false,
 				rules: {
-				
+
 				},
 				messages: {
-				  
+
 				},
 				submitHandler: function(form) {
 				// do other stuff for a valid form
-				
-				$.post('assets/bin/ManageRecords.php', $("#frmPageTemp").serialize(), 
+
+				$.post('assets/bin/ManageRecords.php', $("#frmPageTemp").serialize(),
 				function(data) {
 					if (data.length < 30)
 					{
-				
+
 					 if(op == "add")
 					 {
 					 var urlstr = $("#url").val();
@@ -73,7 +73,7 @@ $btn = "<button type='submit' name='btnUpdateRecord' id='btnUpdateRecord' class=
 					else
 					{
 					alert(data);
-				   
+
 					}
 				});
 				}
@@ -91,12 +91,12 @@ $btn = "<button type='submit' name='btnUpdateRecord' id='btnUpdateRecord' class=
                 <?php echo $modName;?>
             </h4>
             <div id="pageToolBar" class="widget-toolbar no-border">
-               
+
                <a href="<?php echo $listUrl;?>" class="btn btn-xs btn-info  radius-4 bigger"> <i class="ace-icon fa fa-arrow-left bigger-80"></i> Back to List </a>
              </div>
           </div>
-         
-          	
+
+
 
         <div class="widget-body">
           <div class="row"></div>
@@ -123,10 +123,10 @@ $btn = "<button type='submit' name='btnUpdateRecord' id='btnUpdateRecord' class=
                    		<h4 class="header blue bolder smaller">General</h4>
                    		<div class="row">
 							<div class="col-xs-12 col-sm-3">
-                                <?php echo $rst["ProfileImg"];?> 
-                                <a href='#' class='btn  pull-right' data-toggle='modal' data-target='#ProfImg-modal' title="Upload Photo"><i class='fa fa-camera-retro fa-2x'></i></a>  
+                                <?php echo $rst["ProfileImg"];?>
+                                <a href='#' class='btn  pull-right' data-toggle='modal' data-target='#ProfImg-modal' title="Upload Photo"><i class='fa fa-camera-retro fa-2x'></i></a>
 							</div>
-							
+
 							  <div class="col-xs-12 col-sm-9">
 							   <form name="frmPageTemp" id="frmPageTemp" class="form-horizontal" role="form">
 							   	<input type="hidden" name="ModCode" id="ModCode" value="<?php echo $mod;?>">
@@ -181,7 +181,7 @@ $btn = "<button type='submit' name='btnUpdateRecord' id='btnUpdateRecord' class=
 									<label class="col-sm-3 control-label " for="Ward"> Ward </label>
 									<div class="col-sm-9">
 										<select id="Ward" name="Ward"  class="chosen-select col-xs-11 col-sm-11">
-											<?php echo $rs->GetListItems($rst["Ward"],"Wards022",$op);?>
+											<?php echo $rs->GetListItems($rst["Ward"],"Wards041",$op);?>
 										</select>
 									</div>
 								</div>
@@ -203,7 +203,7 @@ $btn = "<button type='submit' name='btnUpdateRecord' id='btnUpdateRecord' class=
 						<h4 class="header blue bolder smaller">Committees</h4>
 						<div class="col-sm-8">
 							<dl id="dt-list-1" >
-								<?php 
+								<?php
 								$PersonnelNo = $rst["PersonnelNo"];
 									$getComm = $db->Execute("select *from vw_commMemberList where MemID='$cid'");
 									$html = "";
@@ -225,7 +225,7 @@ $btn = "<button type='submit' name='btnUpdateRecord' id='btnUpdateRecord' class=
 					</div>
                    </div><!-- End Basic -->
 
-            
+
 				 <div id="edit-password" class="tab-pane">
 					<div class="space-10"></div>
 					<h4 class="header blue bolder smaller">Change Password</h4>
@@ -287,7 +287,7 @@ $uploadCrop = $('#upload-demo').croppie({
     }
 });
 
-$('#upload').on('change', function () { 
+$('#upload').on('change', function () {
   var reader = new FileReader();
     reader.onload = function (e) {
       $uploadCrop.croppie('bind', {
@@ -295,7 +295,7 @@ $('#upload').on('change', function () {
       }).then(function(){
         console.log('jQuery bind complete');
       });
-      
+
     }
     reader.readAsDataURL(this.files[0]);
 });
@@ -317,13 +317,13 @@ $('#upload-result').on('click', function (ev) {
     type: 'canvas',
     size: 'viewport'
   }).then(function (resp) {
-      
+
     $.ajax({
       url: "assets/bin/classfunctions.php",
       type: "POST",
       data: {"ProFileimage":resp,"PoolID":$("#PoolID").val()},
       success: function (data) {
-      	   
+
       	     $(this).prop("disabled",false);
             location.reload();
       }
