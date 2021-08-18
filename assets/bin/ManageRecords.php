@@ -4,7 +4,7 @@ include("../timeout.php");
  global $db;
  if (!isset($_SESSION['user'])) {
      header("Location: ../index.php");
-     die();     
+     die();
 }
  $user = $_SESSION['user'];
 //$db->debug=1;
@@ -22,27 +22,27 @@ $curDT = $db->GetOne("select current_timestamp");
   $tableName = safehtml(strtolower($_POST['btnSaveRecord']));
 
      array_pop($_POST);
-     
+
       /*echo "<pre>";
      print_r($_POST);
      exit();*/
      $ReturnType = isset($_POST['ReturnType']) ? "RstID" : "Message";
     $ModCode = isset($_POST['ModCode']) ? $_POST['ModCode'] : "";
-    
+
      unset($_POST['ReturnType']);
      unset($_POST['ModCode']);
-      
-        
-       
+
+
+
       $getPrefix = $db->GetRow("select  TblColumn,PaddingSize,Prefix from dh_templateprefix where TableName='$tableName'");
        $arg = array_filter($getPrefix);
          if (!empty($arg)) {
             $_POST[$getPrefix["TblColumn"]] = generateUniqueCode($getPrefix["Prefix"],getID($tableName),$getPrefix["PaddingSize"]);
          }
       $CheckFld = $db->GetOne("select CheckExist from dh_modules where S_ROWID='$ModCode'");
-   
+
       if ($CheckFld !="") {
-     
+
         $checkValue = safehtml($_POST[$CheckFld]);
         $CheckExist = $db->GetOne("select S_ROWID from $tableName where $CheckFld ='$checkValue'");
         if ($CheckExist !="") {
@@ -50,7 +50,7 @@ $curDT = $db->GetOne("select current_timestamp");
           exit();
         }
       }
-     
+
 
       array_walk($_POST,"cleanDataHtml");
 
@@ -71,10 +71,12 @@ $curDT = $db->GetOne("select current_timestamp");
           $PersonnelNo         = $_POST['PersonnelNo'];
           $IDNO                = $_POST['IDNo'];
           $randompswd          = "#ID".$IDNO;
-          $record["Pwsd_PFNo"] =  md5($randompswd.$PersonnelNo.'GodFirst');
-          $record["Pwsd_IDNo"] =  md5($randompswd.$IDNO.'GodFirst'); 
+
+         $record["Pwsd_PFNo"] =  md5($randompswd.$PersonnelNo.'GodFirst');
+         $record["Pwsd_IDNo"] =  md5($randompswd.$IDNO.'GodFirst');
+
         }
-       
+
        $record["CreatedBy"] = $user;
        $record["DateCreated"] = $curDT;
        $table  = $tableName;
@@ -109,8 +111,8 @@ $curDT = $db->GetOne("select current_timestamp");
 
     $ModCode = isset($_POST['ModCode']) ? $_POST['ModCode'] : "";
     $ReturnType = isset($_POST['ReturnType']) ? "RstID" : "Message";
-    
-  
+
+
      array_pop($_POST);
      $S_ROWID = $_POST['S_ROWID'];
      unset($_POST['S_ROWID']);
@@ -125,7 +127,7 @@ $curDT = $db->GetOne("select current_timestamp");
        }
        $_POST[$ckey] = $cval;
      }
-      
+
     $auditLog = doAuditLog($_POST,$S_ROWID,$tableName);
     $record   = $auditLog[0];
     $LogChanges = $auditLog[1];
@@ -143,7 +145,7 @@ $curDT = $db->GetOne("select current_timestamp");
        $table  = $tableName;
        $action = "UPDATE";
        $db->AutoExecute($table,$record,$action,$criteria);
-       
+
         if ($db) {
          if ($table == "assemblybizdocs") {
             $DocInfo = $db->GetRow("select *from $table where S_ROWID='$S_ROWID'");
@@ -154,7 +156,7 @@ $curDT = $db->GetOne("select current_timestamp");
             $rec["FileDescription"] = $DocInfo["DocumentTitle"];
             $rec["New_FileName"] =   str_replace($FileInfo["FileDescription"], $DocInfo["DocumentTitle"], $FileInfo["New_FileName"]);
 
-  
+
             $criteria = "S_ROWID = '$DocID'";
           $table  = "elementstorage";
            $action = "UPDATE";
@@ -190,12 +192,12 @@ $curDT = $db->GetOne("select current_timestamp");
          if (!empty($arg)) {
             $_POST[$getPrefix[0]] = generateUniqueCode($getPrefix[2],getID($tableName),$getPrefix[1]);
          }
-        
+
     foreach ($_POST as $column => $value) {
       $value = is_array($value) ? implode(',', $value) : $value;
     $record[$column] = checkDT($column,$value,$tableName);
     }
-       
+
        $record["CreatedBy"] = $user;
        $table  = $tableName;
        $action = "INSERT";
@@ -212,13 +214,13 @@ $curDT = $db->GetOne("select current_timestamp");
         }
  }
 
- // Delete Record 
+ // Delete Record
  if (isset($_POST['DeleteRecord'])) {
   $S_ROWID = $_POST['DeleteRecord'];
   $tbl = $_POST['tbl'];
 
   $ModCode = isset($_POST['ModCode']) ? $_POST['ModCode'] : $rs->GetOne("dh_modules","S_ROWID","TableName='$tbl'");
-  
+
   if ($tbl == "dh_usergroups") {
     $GroupCode = $db->GetOne("select GroupCode from dh_usergroups where S_ROWID='$S_ROWID'");
     $exec = $db->Execute("delete from listitems where ItemType='Groups' and ItemCode='$GroupCode'");
@@ -228,7 +230,7 @@ $curDT = $db->GetOne("select current_timestamp");
     $exec = $db->Execute("delete from dh_listview  where ModuleCode='$ModuleCode'");
      $exec = $db->Execute("delete from dh_listquery  where ModuleCode='$ModuleCode'");
      }
-   
+
    if ($tbl == "tbl_divisions") {
     $exec = $db->Execute("update users set Division='1',Department='1' where Division='$S_ROWID'");
    }
@@ -240,7 +242,7 @@ $curDT = $db->GetOne("select current_timestamp");
   logAction($S_ROWID,$tbl,$user,"Delete","",$ModCode);
  }
 
-  // Delete Record 
+  // Delete Record
  if (isset($_POST['DeleteMultiple'])) {
   $ListID = json_decode($_POST['DeleteMultiple'],true);
   $mod = safehtml($_POST['mod']);
@@ -262,8 +264,8 @@ $curDT = $db->GetOne("select current_timestamp");
      $exec = $db->Execute("delete from dh_listview  where ModuleCode='$ModuleCode'");
      $exec = $db->Execute("delete from dh_listquery  where ModuleCode='$ModuleCode'");
      }
-   
-  
+
+
 
    foreach ($ListID as $key => $S_ROWID) {
      logAction($S_ROWID,$tbl,$user,"Delete","",$mod);
@@ -303,11 +305,11 @@ $logChanges["Reason"] = $Reason;
     $DocInfo = $rs->row("assemblybizdocs","S_ROWID='$childID'");
     $childTBL = "assemblybizdocs";
     $DocID   = $DocInfo["DocID"];
-    $Reason  = safehtml($_POST['Reason']);   
+    $Reason  = safehtml($_POST['Reason']);
 
    $FileInfo = $rs->row("elementstorage","S_ROWID='$DocID'");
     $ModCode = "9999";
-    
+
     $StoragePath = $rs->getConf("AssetPath","AssetPath");
     $FileName = $FileInfo["Orginal_FileName"];
     $Version = str_pad((int)$FileInfo["Version"], 5, "0", STR_PAD_LEFT);
@@ -321,7 +323,7 @@ $logChanges["Reason"] = $Reason;
 
 $logChanges["Document Description"] = $FileInfo["FileDescription"];
 $logChanges["Reason"] = $Reason;
-  
+
   logAction($childID,$childTBL,"admin","DocumentDelete",$logChanges,$ModCode);
   $delDoc = $db->Execute("delete from $childTBL where S_ROWID='$childID'");
 
@@ -333,7 +335,7 @@ $logChanges["Reason"] = $Reason;
    $DocID = safehtml($_POST['DocID']);
    $MailID = safehtml($_POST['MailID']);
    $ModCode = isset($_POST['ModCode']) ? $_POST['ModCode'] : "";
-    
+
    $MailInfo = $rs->row("tbl_mailfiling","S_ROWID='$MailID'");
    if ($MailInfo["S_ROWID"] != "") {
      $FileInfo = $rs->row("elementstorage","S_ROWID='$DocID'");
@@ -352,7 +354,7 @@ $logChanges["Reason"] = $Reason;
     echo "Invalid MailID , Please try Again";
    }
 
-   
+
  }
 
 
@@ -372,7 +374,7 @@ $logChanges["Reason"] = $Reason;
  }
 
   if (isset($_POST['RemoveTTStudent'])) {
-   
+
      $StudSlotID = safehtml($_POST['RemoveTTStudent']);
     $exec = $db->Execute("delete from tbl_slotlist where S_ROWID='$StudSlotID'");
   }
@@ -386,7 +388,7 @@ $logChanges["Reason"] = $Reason;
 
 
 if (isset($_POST['btnListItems'])) {
- 
+
   $ItemCode = safehtml($_POST['ItemCode']);
   $record["ItemType"] = safehtml($_POST['btnListItems']);
   $record["ItemCode"] = safehtml($_POST['ItemCode']);
@@ -426,7 +428,7 @@ if (isset($_POST['btnSaveNotifications'])) {
       $action = "INSERT";
       $db->AutoExecute($table,$record,$action);
       $S_ROWID = $db->GetOne("select  max(S_ROWID) from $table");
-    
+
     $getMembers = $db->GetArray("select *from committeeMembersList where CommitteeID='$CommitteeID'");
       foreach ($getMembers as $key => $vals) {
         $MemID = $vals["MemID"];
@@ -434,6 +436,6 @@ if (isset($_POST['btnSaveNotifications'])) {
       }
 }
 
-  
- 
+
+
 ?>
