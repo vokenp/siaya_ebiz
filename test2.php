@@ -1,12 +1,23 @@
 <?php
-   include("assets/bin/con_db.php");
-   global $db;
-   echo "<pre>";
-    //$db->debug=1;
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-    $searchqry = $rs->encode("kenya is me");
+$postRequest = array(
+    'Method' => 'DoUserLogin',
+    'UserName' => '123demo',
+    'Pwsd' => '#IDdemo123',
+    'LoginType' => 'PFNo'
+);
+  echo "<pre>";
+$url = "https://apps.quarto.co.ke/assemblydocs/appsrepsondents.php";
 
- echo $searchqry;
-  
+$cURLConnection = curl_init($url);
+curl_setopt($cURLConnection, CURLOPT_POSTFIELDS, $postRequest);
+curl_setopt($cURLConnection, CURLOPT_RETURNTRANSFER, true);
+
+$apiResponse = curl_exec($cURLConnection);
+curl_close($cURLConnection);
+
+//$apiResponse = "[$apiResponse]";
+$jsonArrayResponse = json_decode($apiResponse,true);
+ print_r($jsonArrayResponse );
 ?>

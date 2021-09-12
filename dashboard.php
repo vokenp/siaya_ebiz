@@ -21,10 +21,8 @@
 			revert: true,      // will cause the event to go back to its
 			revertDuration: 0  //  original position after the drag
 		});
-		
+
 	});
-
-
 
 
 	/* initialize the calendar
@@ -38,13 +36,13 @@
 
 	var calendar = $('#calendar').fullCalendar({
 		//isRTL: true,
-		//firstDay: 1,// >> change first day of week 
-		
+		//firstDay: 1,// >> change first day of week
+
 		buttonHtml: {
 			prev: '<i class="ace-icon fa fa-chevron-left"></i>',
 			next: '<i class="ace-icon fa fa-chevron-right"></i>'
 		},
-	
+
 		header: {
 			left: 'prev,next today',
 			center: 'title',
@@ -70,7 +68,7 @@
 		  }
 		]
 		,
-		
+
 		/**eventResize: function(event, delta, revertFunc) {
 
 			alert(event.title + " end is now " + event.end.format());
@@ -80,40 +78,40 @@
 			}
 
 		},*/
-		
+
 		editable: true,
 		droppable: true, // this allows things to be dropped onto the calendar !!!
 		drop: function(date) { // this function is called when something is dropped
-		
+
 			// retrieve the dropped element's stored Event Object
 			var originalEventObject = $(this).data('eventObject');
 			var $extraEventClass = $(this).attr('data-class');
-			
-			
+
+
 			// we need to copy it, so that multiple events don't have a reference to the same object
 			var copiedEventObject = $.extend({}, originalEventObject);
-			
+
 			// assign it the date that was reported
 			copiedEventObject.start = date;
 			copiedEventObject.allDay = false;
 			if($extraEventClass) copiedEventObject['className'] = [$extraEventClass];
-			
+
 			// render the event on the calendar
 			// the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
 			$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
-			
+
 			// is the "remove after drop" checkbox checked?
 			if ($('#drop-remove').is(':checked')) {
 				// if so, remove the element from the "Draggable Events" list
 				$(this).remove();
 			}
-			
+
 		}
 		,
 		selectable: true,
 		selectHelper: true,
 		select: function(start, end, allDay) {
-			
+
 			bootbox.prompt("New Event Title:", function(title) {
 				if (title !== null) {
 					calendar.fullCalendar('renderEvent',
@@ -128,7 +126,7 @@
 					);
 				}
 			});
-			
+
 
 			calendar.fullCalendar('unselect');
 		}
@@ -136,7 +134,7 @@
 		eventClick: function(calEvent, jsEvent, view) {
 
 			//display a modal
-			var modal = 
+			var modal =
 			'<div class="modal fade">\
 			  <div class="modal-dialog">\
 			   <div class="modal-content">\
@@ -155,8 +153,8 @@
 			  </div>\
 			 </div>\
 			</div>';
-		
-		
+
+
 			var modal = $(modal).appendTo('body');
 			modal.find('form').on('submit', function(ev){
 				ev.preventDefault();
@@ -171,7 +169,7 @@
 				})
 				modal.modal("hide");
 			});
-			
+
 			modal.modal('show').on('hidden', function(){
 				modal.remove();
 			});
@@ -185,7 +183,7 @@
 			//$(this).css('border-color', 'red');
 
 		}
-		
+
 	});
 
 
@@ -194,7 +192,7 @@
  <div class="page-content">
 <div class="row">
 <div class="col-sm-6">
-	
+
 </div>
 
 <div class="col-sm-6">
@@ -205,14 +203,14 @@
                Committee Sittings Calendar
             </h4>
             <div id="pageToolBar" class="widget-toolbar no-border">
-             
+
 
              </div>
           </div>
           <form name="frmPageTemp" id="frmPageTemp" class="form-horizontal" role="form">
           	<input type="hidden" name="ModCode" id="ModCode" value="<?php echo $mod;?>">
           	<input type="hidden" name="ReturnType" id="ReturnType" value="RstID">
-            
+
         <div class="widget-body">
            <div class="widget-main">
 
@@ -223,10 +221,10 @@
 
           </div><!-- End Widget-Main -->
           <div class="widget-toolbox padding-8 clearfix text-center">
-               
+
           </div>
         </div><!-- End Widget-body -->
-         
+
     </form>
 </div><!-- End WidgetBox -->
 	</div>

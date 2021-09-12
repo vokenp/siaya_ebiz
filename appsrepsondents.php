@@ -5,7 +5,8 @@
   error_reporting(E_ALL);
   ini_set('display_errors', 1);
 
- $url = "https://apps.quarto.co.ke/";
+ $url = "https://apps.quarto.co.ke/siaya-ebusiness";
+ 
 
   $method = isset($_POST["Method"]) ? $_POST["Method"] : "";
    if ($method == "getDocCategories") {
