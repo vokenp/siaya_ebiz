@@ -159,7 +159,7 @@ $btn = "<button type='submit' name='btnUpdateRecord' id='btnUpdateRecord' class=
 					             	<div class="form-group col-sm-6">
 										<label class="col-sm-3 control-label " for="PhoneNo"> PhoneNo</label>
 										<div class="col-sm-9">
-											<input type="text" id="PhoneNo" name="PhoneNo" placeholder="Enter PhoneNo" class="col-xs-11 col-sm-11" value="<?php echo $rst['PhoneNo'];?>"  required="true" />
+											<input type="text" id="PhoneNo" name="PhoneNo" placeholder="Enter PhoneNo" class="col-xs-11 col-sm-11 mask-phoneNo" value="<?php echo $rst['PhoneNo'];?>"  required="true" />
 										</div>
 									</div>
 								<div class="form-group col-sm-6">
