@@ -18,8 +18,8 @@ define('DB_DRIVER', 'mysqli');
 if (DB_DRIVER == "mysqli") {
 
 define('DB_HOSTNAME', 'localhost');
-define('DB_USERNAME', 'root');
-define('DB_PASSWORD', 'P@$$w0rd@3219');
+define('DB_USERNAME', $conf["DB_USERNAME"]);
+define('DB_PASSWORD', $conf["DB_PASSWORD"]);
 define('DB_DATABASE', 'siaya_ebiz');
 /*define('DB_HOSTNAME', 'localhost');
 define('DB_USERNAME', 'a6m3otmyoptr_cakadmndocs');

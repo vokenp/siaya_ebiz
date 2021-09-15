@@ -7,7 +7,7 @@ ini_set('display_errors', 1);
 
 ini_set('allow_url_fopen', '1');
 ini_set('display_errors', 1);
-  
+
 
 if (isset($_POST['ProFileimage'])) {
   $data = $_POST['ProFileimage'];
@@ -19,7 +19,7 @@ list($type, $data) = explode(',', $data);
   error_reporting(E_ALL ^ E_DEPRECATED);
 $data = base64_decode($data);
 
-$DIR_ROOT = "/var/www/html/assemblydocs";   
+$DIR_ROOT = "/var/www/html/siaya-ebusiness";   
 
 $rs->makeDir($DIR_ROOT,"/assets/profilepics/");
 $imageName = sha1($PoolID).'.png';
@@ -63,7 +63,7 @@ if (isset($_POST['convertFDate'])) {
   {
     $convertedDate = $CurDocType;
   }
-  
+
   $DocumentTitle = $DocSource == "Assembly" ? "CAK ".$CurDocType." ".$convertedDate : $convertedDate;
 
 
@@ -71,6 +71,6 @@ if (isset($_POST['convertFDate'])) {
 }
 
 
-    
-    
+
+
 ?>
