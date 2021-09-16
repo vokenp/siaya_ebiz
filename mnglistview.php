@@ -1,7 +1,8 @@
-<?php 
+<?php
   unset($_GET['sk']);
   $mod = $_GET['mod'];
   $pvals = array();
+
   foreach ($_GET as $key => $val) {
    $pvals[] = $key.":".$val;
   }
@@ -19,6 +20,7 @@ $modUrl = $rs->Modurl($ModuleCode);
  $LinkUrl = str_replace('view=edit',"view=add", $modUrl);
  $AddLink = "<a href='$LinkUrl' class='dt-button btn btn-white btn-primary btn-bold' title='Add New'><i class='fa fa-plus  fa-lg'></i> Add New</a>";
 
+
 $MetaColumns = $db->MetaColumns($TableName);
 $MetaType = array();
    foreach ($MetaColumns as $key => $vals) {
@@ -29,8 +31,8 @@ $MetaType = array();
 $getCols = $db->GetArray("select FieldName,DisplayName,searchable from dh_listview where ModuleCode='$ModuleCode' and ListType='Main' order by DisplayOrder asc");
     //$colst = $rs->getCols("dh_listview");
     $dFields = array();
-  $dCols = array(); 
- 
+  $dCols = array();
+
      $chkbox = array();
      $chkbox["targets"] = 0;
      $chkbox["checkboxes"] = array("selectRow" => true);
@@ -41,13 +43,13 @@ $getCols = $db->GetArray("select FieldName,DisplayName,searchable from dh_listvi
      foreach ($getCols as $val) {
       $type = $MetaType[$val["FieldName"]];
       $searchable = $val["searchable"] == "Y" ? true : false;
-      $dFields[] = $val["DisplayName"]; 
-      $gdata[] = $val["FieldName"]; 
+      $dFields[] = $val["DisplayName"];
+      $gdata[] = $val["FieldName"];
       $tIndex += 1;
       $dCols[] = array("targets" => $tIndex, "title" => $val["DisplayName"],"name" => $val["FieldName"],"searchable" => $searchable);
        $exportCols[$tIndex] = $tIndex;
      }
-     
+
      $Excol = array();
      $Excol["columns"] = array_keys($exportCols);
 
@@ -69,47 +71,63 @@ $getCols = $db->GetArray("select FieldName,DisplayName,searchable from dh_listvi
     $btnDelete["attr"] = array("title"=> " delete Hii","id"=>"btnDelete2");
     //$btnDelete["action"] = 'function ( e, dt, node, config ) {doRecordDelete();}';
 
-  
+   $pdf = array();
+    $pdf["extend"] = "pdfHtml5";
+    $pdf["title"] = $ModuleName." List";
+    $pdf["orientation"] = "portrait";
+    $pdf["className"] =  "btn btn-white btn-primary btn-bold";
+    $pdf["text"] = "<i class='fa fa-file-pdf-o bigger-110 red'></i>";
+    $pdf["titleAttr"] = "Generate PDF Report";
+    $pdf["exportOptions"] = $Excol;
+
+   $btnExcel = array();
+    $btnExcel["title"] = $ModuleName." List";
+    $btnExcel["className"] =  "btn btn-white btn-primary btn-bold";
+    $btnExcel["text"] = "<i class='fa fa-file-excel-o bigger-110 green'></i>";
+    $btnExcel["titleAttr"] = "Generate Excel";
+    //$btnExcel["exportOptions"] = $Excol;
 
 
       $btnlist = array();
-     
+
       $btnlist[] = $btnPrint;
-      
-   
-      
+
+
+
 ?>
-  
+
         <div class="widget-box">
           <div class="widget-header widget-header-flat">
             <h4 class="widget-title smaller">
               <i class="ace-icon fa fa-list smaller-80"></i>
-                <?php echo $ModuleName." List";?>
+                <?php echo $ModuleName;?>
             </h4>
             <div id="listToolBar" class="widget-toolbar no-border">
-              
+
              </div>
 
           </div>
         <div class="widget-body">
+          <div class="error_box"></div>
           <div class="dataTables_borderWrap">
           <table id="tblListView" class="table table-bordered table-striped"></table>
          </div><!-- dataTables_borderWrap -->
         </div>
-        </div><!-- WidgetBox -->  
+        </div><!-- WidgetBox -->
         <input type="hidden" id="qrysmt" name="qrysmt">
+        <input type="hidden" name="token" id="token" value="<?php echo $token; ?>" class="token">
 <input type="hidden" name="modCode" id="modCode" value="<?php echo $mod;?>">
 <input type="hidden" name="enDeleteItems" id="enDeleteItems" value="<?php echo $rst["DeleteItems"];?>">
 <input type="hidden" name="EnableCreation" id="EnableCreation" value="<?php echo $rst["EnableCreation"];?>">
+
 <input type="hidden" name="" id="btnAdd" value="<?php echo $AddLink;?>">
   <script type="text/javascript">
-    jQuery(function($) {
-
+   $(document).ready(function(){
 
         //initiate dataTables plugin
          var dcols = <?php echo json_encode($dCols); ?>;
         var btnlist = <?php echo json_encode($btnlist); ?>;
-         //var btnAdd = <?php echo $AddLink ;?>;
+
          var dtListView = $('#tblListView').wrap("<div class='dataTables_borderWrap' />").DataTable({
          "Processing": true,
          "serverSide": true,
@@ -121,7 +139,7 @@ $getCols = $db->GetArray("select FieldName,DisplayName,searchable from dh_listvi
          "paging": true,
          "pagingType": "full",
          "order": [[ 2, 'desc' ]],
-         "columnDefs": dcols, 
+         "columnDefs": dcols,
          "lengthMenu": [[20,50, 100, 200], [20,50, 100, 200]],
          "select": {
          "style": "multi"
@@ -131,54 +149,55 @@ $getCols = $db->GetArray("select FieldName,DisplayName,searchable from dh_listvi
             type: "post",  // type of method  , by default would be get
            "data":function(data) {
             data.ModCode = $('#modCode').val();
+
               //alert(JSON.stringify(data));
             },
 
-            error: function(){  // error handling code
-              $("#tblListView_processing").css("display","none");
+            error: function(ep){  // error handling code
+              alert(JSON.stringify(ep));
+             // $("#tblListView_processing").css("display","none");
             }
           }
-          
-    });
+   });
 
-
-    dtListView.on('xhr', function() {
+ dtListView.on('xhr', function() {
   var ajaxJson = dtListView.ajax.json();
   $("#qrysmt").val(ajaxJson.QryParams.qrysmt);
-   
+
+
 });
 
-         new $.fn.dataTable.Buttons( dtListView, {
+   new $.fn.dataTable.Buttons( dtListView, {
           buttons: btnlist
         } );
-      
-        var delBtn = "<a id='btnDelete' class='dt-button btn btn-white btn-primary btn-bold'> <i class='fa fa-trash bigger-110 red' title='Delete Selected Records'></i></a>";
+     dtListView.buttons().container().appendTo( $('#listToolBar') );
+
+     var delBtn = "<a id='btnDelete' class='dt-button btn btn-white btn-primary btn-bold'> <i class='fa fa-trash bigger-110 red' title='Delete Selected Records'></i></a>";
         var excelBtn = "<a id='btnExcel' class='dt-button btn btn-white btn-primary btn-bold'> <i class='fa fa-file-excel-o bigger-110 green' title='Export to Excel'></i></a>";
 
         var pdfBtn = "<a id='btnPDF' class='dt-button btn btn-white btn-primary btn-bold'> <i class='fa fa-file-pdf-o bigger-110 red' title='Export to PDF'></i></a>";
 
         var reload = "<a id='btnReload' class='dt-button btn btn-white btn-primary btn-bold'> <i class='fa fa-refresh bigger-110 blue' title='Refresh'></i></a>";
-          
+
           $(".dt-buttons").append($(excelBtn));
           $(".dt-buttons").append($(pdfBtn));
-          if ($("#enDeleteItems").val() == "Y") 
+          if ($("#enDeleteItems").val() == "Y")
           {
              $(".dt-buttons").append($(delBtn));
           }
 
-          
+      $(".dt-buttons").prepend($(reload));
 
-          
-        
-         $(".dt-buttons").prepend($(reload));
+         if ($("#EnableCreation").val() == "Y")
+          {
 
-         if ($("#EnableCreation").val() == "Y") 
-          { 
             var btnAdd = $("#btnAdd").val();
+
              $(".dt-buttons").prepend($(btnAdd));
+
           }
 
-         $("#btnReload").click(function(){
+              $("#btnReload").click(function(){
           $('#tblListView').DataTable().draw();
          });
 
@@ -189,24 +208,23 @@ $getCols = $db->GetArray("select FieldName,DisplayName,searchable from dh_listvi
         $("#btnExcel").click(function(){
             var modCode = $('#modCode').val();
             var qrysmt = $('#qrysmt').val();
-             $(window.location).attr('href', "doExcelExport.php?modCode="+modCode+"&qrysmt="+qrysmt);
+             $(window.location).attr('href', "doExcelExport.php");
         });
 
-        $("#btnPDF").click(function(){
+          $("#btnPDF").click(function(){
             var modCode = $('#modCode').val();
             var qrysmt = $('#qrysmt').val();
-             $(window.location).attr('href', "dopdfexport.php?modCode="+modCode+"&qrysmt="+qrysmt);
+             $(window.location).attr('href', "dopdfexport.php");
         });
 
-
-         function doRecordDelete(){
+           function doRecordDelete(){
           var selectedrows = new Array();
         var rows_selected = dtListView.column(0).checkboxes.selected();
         $.each(rows_selected, function(index, rowId){
             selectedrows.push(rowId);
         });
-          
-          if (selectedrows.length != 0) 
+
+          if (selectedrows.length != 0)
             {
               bootbox.confirm({
                 centerVertical: true,
@@ -241,10 +259,10 @@ $getCols = $db->GetArray("select FieldName,DisplayName,searchable from dh_listvi
             });
             }
       }
-       
-          });
+
+    });// End Document
+
+
+
+
   </script>
-
-
-
-  
