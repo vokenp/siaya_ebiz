@@ -40,11 +40,7 @@
 			<div class="main-content">
 				<div class="row">
 					<div class="col-sm-10 col-sm-offset-1">
-<div class="login-container">
-<div class="center">
-<img src="assets/images/logo.png" height="100px" width="350px;">
-</div>
-
+<div class="login-container pull-right" style="margin-top:150px;">
 <div class="space-6"></div>
 
 <div class="position-relative">
