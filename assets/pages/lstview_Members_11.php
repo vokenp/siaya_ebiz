@@ -8,7 +8,7 @@
   $postvals = implode(',',$pvals);
   $dateTypes = array('date','timestamp','datetime');
    $modInfo    = $rs->row("dh_modules","S_ROWID = '$mod'");
-   //$db->debug=1;
+   $db->debug=1;
  $ModuleCode = $modInfo["ModuleCode"];
 $ModuleName = $modInfo["ModuleName"];
 $TableName = $modInfo["TableName"];
