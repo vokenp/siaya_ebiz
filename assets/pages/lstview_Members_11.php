@@ -1,4 +1,4 @@
-<?php 
+<?php
   unset($_GET['sk']);
   $mod = $_GET['mod'];
   $pvals = array();
@@ -29,8 +29,8 @@ $MetaType = array();
 $getCols = $db->GetArray("select FieldName,DisplayName,searchable from dh_listview where ModuleCode='$ModuleCode' and ListType='Main' order by DisplayOrder asc");
     //$colst = $rs->getCols("dh_listview");
     $dFields = array();
-  $dCols = array(); 
- 
+  $dCols = array();
+
      $chkbox = array();
      $chkbox["targets"] = 0;
      $chkbox["checkboxes"] = array("selectRow" => true);
@@ -41,13 +41,13 @@ $getCols = $db->GetArray("select FieldName,DisplayName,searchable from dh_listvi
      foreach ($getCols as $val) {
       $type = $MetaType[$val["FieldName"]];
       $searchable = $val["searchable"] == "Y" ? true : false;
-      $dFields[] = $val["DisplayName"]; 
-      $gdata[] = $val["FieldName"]; 
+      $dFields[] = $val["DisplayName"];
+      $gdata[] = $val["FieldName"];
       $tIndex += 1;
       $dCols[] = array("targets" => $tIndex, "title" => $val["DisplayName"],"name" => $val["FieldName"],"searchable" => $searchable);
        $exportCols[$tIndex] = $tIndex;
      }
-     
+
      $Excol = array();
      $Excol["columns"] = array_keys($exportCols);
 
@@ -77,7 +77,7 @@ $getCols = $db->GetArray("select FieldName,DisplayName,searchable from dh_listvi
     $pdf["text"] = "<i class='fa fa-file-pdf-o bigger-110 red'></i>";
     $pdf["titleAttr"] = "Generate PDF Report";
     $pdf["exportOptions"] = $Excol;
-  
+
    $btnExcel = array();
     $btnExcel["title"] = $ModuleName." List";
     $btnExcel["className"] =  "btn btn-white btn-primary btn-bold";
@@ -87,11 +87,11 @@ $getCols = $db->GetArray("select FieldName,DisplayName,searchable from dh_listvi
 
 
       $btnlist = array();
-     
+
       $btnlist[] = $btnPrint;
       $btnlist[] = $pdf;
-   
-      
+
+
 ?>
    <input type="hidden" name="userType" id="userType" value="<?php echo $UserType;?>">
         <div class="widget-box">
@@ -101,7 +101,7 @@ $getCols = $db->GetArray("select FieldName,DisplayName,searchable from dh_listvi
                 <?php echo $ModuleName." List";?>
             </h4>
             <div id="listToolBar" class="widget-toolbar no-border">
-              
+
              </div>
 
           </div>
@@ -110,7 +110,7 @@ $getCols = $db->GetArray("select FieldName,DisplayName,searchable from dh_listvi
           <table id="tblListView" class="table table-bordered table-striped"></table>
          </div><!-- dataTables_borderWrap -->
         </div>
-        </div><!-- WidgetBox -->  
+        </div><!-- WidgetBox -->
         <input type="hidden" id="qrysmt" name="qrysmt">
 <input type="hidden" name="modCode" id="modCode" value="<?php echo $mod;?>">
 <input type="hidden" name="enDeleteItems" id="enDeleteItems" value="<?php echo $rst["DeleteItems"];?>">
@@ -135,7 +135,7 @@ $getCols = $db->GetArray("select FieldName,DisplayName,searchable from dh_listvi
          "paging": true,
          "pagingType": "full",
          "order": [[ 2, 'desc' ]],
-         "columnDefs": dcols, 
+         "columnDefs": dcols,
          "lengthMenu": [[20,50, 100, 200], [20,50, 100, 200]],
          "select": {
          "style": "multi"
@@ -147,20 +147,20 @@ $getCols = $db->GetArray("select FieldName,DisplayName,searchable from dh_listvi
             data.ModCode = $('#modCode').val();
             data.userType = $('#userType').val();
             },
-
-            error: function(data){  // error handling code
+            error: function(xhr, textStatus, errorThrown){  // error handling code
               //$("#tblListView_processing").css("display","none");
-              alert(JSON.stringify(data));
+              //alert(JSON.stringify(data));
+              alert(errorThrown);
             }
           }
-          
+
     });
 
 
     dtListView.on('xhr', function() {
   var ajaxJson = dtListView.ajax.json();
   $("#qrysmt").val(ajaxJson.QryParams.qrysmt);
-   
+
 });
 
          new $.fn.dataTable.Buttons( dtListView, {
@@ -171,21 +171,21 @@ $getCols = $db->GetArray("select FieldName,DisplayName,searchable from dh_listvi
         var excelBtn = "<a id='btnExcel' class='dt-button btn btn-white btn-primary btn-bold'> <i class='fa fa-file-excel-o bigger-110 green' title='Export to Excel'></i></a>";
 
         var reload = "<a id='btnReload' class='dt-button btn btn-white btn-primary btn-bold'> <i class='fa fa-refresh bigger-110 blue' title='Refresh'></i></a>";
-          
+
           $(".dt-buttons").append($(excelBtn));
-          if ($("#enDeleteItems").val() == "Y") 
+          if ($("#enDeleteItems").val() == "Y")
           {
              $(".dt-buttons").append($(delBtn));
           }
 
-          
 
-          
-        
+
+
+
          $(".dt-buttons").prepend($(reload));
 
-         if ($("#EnableCreation").val() == "Y") 
-          { 
+         if ($("#EnableCreation").val() == "Y")
+          {
             var btnAdd = $("#btnAdd").val();
              $(".dt-buttons").prepend($(btnAdd));
           }
@@ -211,8 +211,8 @@ $getCols = $db->GetArray("select FieldName,DisplayName,searchable from dh_listvi
         $.each(rows_selected, function(index, rowId){
             selectedrows.push(rowId);
         });
-          
-          if (selectedrows.length != 0) 
+
+          if (selectedrows.length != 0)
             {
               bootbox.confirm({
                 centerVertical: true,
@@ -247,10 +247,6 @@ $getCols = $db->GetArray("select FieldName,DisplayName,searchable from dh_listvi
             });
             }
       }
-       
+
           });
   </script>
-
-
-
-  
