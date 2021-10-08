@@ -151,7 +151,7 @@ $getCols = $db->GetArray("select FieldName,DisplayName,searchable from dh_listvi
               //$("#tblListView_processing").css("display","none");
               //alert(JSON.stringify(data));
               alert(errorThrown);
-              alert(xhr);
+              alert(JSON.stringify(xhr));
               alert(textStatus);
             }
           }
