@@ -336,8 +336,6 @@ foreach ($MonthWeek as $key => $weekVals) {
             $grandTotal["AmountPayable]"] = 0;
 foreach ($MonthWeek as $key => $weekVals) {
   $key += 1;
-
-
             $week_start = $weekVals["week_start"];
             $week_end = $weekVals["week_end"];
 

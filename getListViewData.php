@@ -1,11 +1,11 @@
-<?php 
+<?php
 include("timeout.php");
  include("assets/bin/con_db.php");
  global $db;
  //$db->debug=1;
    $user = $_SESSION['user'];
   $modCode = safehtml($_POST['ModCode']);
-  
+
   $MView = $rs->getDataTblView($modCode);
   $cols =  $MView["ViewCols"];
   $tableName = $MView["ModInfo"]["TableName"];
@@ -16,12 +16,12 @@ include("timeout.php");
   $search = $_POST['search'];
   $SearchValue = safehtml(trim($search["value"]));
    $where = " where 1=1 ";
-  
+
   $userType = isset($_POST['userType']) ? $_POST['userType'] : "";
 
 
 
-    
+
    $columns = $_POST['columns'];
    $keyCount  = 0;
     foreach ($columns as $key => $Colval) {
@@ -38,35 +38,35 @@ include("timeout.php");
         $criteria = "";
          if ($ModuleName == "Members") {
              $criteria = $userType == "Admin" ? "" : " and S_ROWID in (select MemID from vw_commMemberList where ClerkResponsible='$user') ";
-             
+
          }
-         elseif ($ModuleName == "Committees") 
+         elseif ($ModuleName == "Committees")
          {
             $criteria = $userType == "Admin" ? "" : " and ClerkResponsible='$user' ";
          }
-         elseif ($ModuleName == "Committee Meetings") 
+         elseif ($ModuleName == "Committee Meetings")
          {
            $criteria = $userType == "Admin" ? "" : " and CommitteeID in (select S_ROWID from assemblycommittees where ClerkResponsible='$user') ";
          }
-         elseif ($ModuleName == "Schedule of Meetings") 
+         elseif ($ModuleName == "Schedule of Meetings")
          {
            $criteria = $userType == "Admin" ? "" : " and CommitteeID in (select S_ROWID from assemblycommittees where ClerkResponsible='$user') ";
          }
-         elseif ($ModuleName == "Committee Notifications") 
+         elseif ($ModuleName == "Committee Notifications")
          {
            $criteria = $userType == "Admin" ? "" : " and CommitteeID in (select S_ROWID from assemblycommittees where ClerkResponsible='$user') ";
          }
-      
+
        $where .= " $criteria ";
      }
 
 
-   
+
   $Order = $_POST['order'];
   $OrderColumn = $Order[0]["column"];
   $OrderColName = $columns[$OrderColumn]["name"];
-  $OrderDire = $Order[0]["dir"]; 
-  
+  $OrderDire = $Order[0]["dir"];
+
   $getdata = $db->SelectLimit("select * from $tableName $where order by $OrderColName $OrderDire ",$_POST['length'],$_POST['start']);
 
    $count = $db->GetOne("select count(*) from $tableName $where");
@@ -93,7 +93,14 @@ include("timeout.php");
 
       if ($ModuleName == "Members") {
          $ProfileImg = $rst["ProfileImg"];
-         $ImgPath = $ProfileImg == "" ? "assets/profilepics/NoImage.png" : $ProfileImg;
+           if($ProfileImg == "")
+           {
+             $ImgPath = "assets/profilepics/NoImage.png";
+           }
+           else {
+            $ImgPath = file_exists($ProfileImg) ? $ProfileImg : "assets/profilepics/NoImage.png";
+           }
+
        $record[1] = "<a href='$LinkUrl' title='Open Record'><img class='profile-user-img img-responsive img-circle' src='$ImgPath' style='height:100px;width:100px;' ></a>";
       }
       else
@@ -101,7 +108,7 @@ include("timeout.php");
         $record[1] = $editLink;
       }
 
-      
+
        foreach ($cols as $key => $val) {
         $key += 1;
        	$record[$key] = $rst[$val];
@@ -115,11 +122,11 @@ include("timeout.php");
       $openRoomLink = "<a href='$roomUrl' title='Join Room' class='ml-1'><i class='fa fa-video-camera'></i></a>";
       $record[count($cols)+2]=$openRoomLink.$roomInvitesLink;
     }
-       
+
     $recdata[] = $record;
     $getdata->MoveNext();
    }
-   
+
    $searchqry = array();
    //$searchqry["qrysmt"] = $rs->encode($where);
    $searchqry["qrysmt"] = $where;
