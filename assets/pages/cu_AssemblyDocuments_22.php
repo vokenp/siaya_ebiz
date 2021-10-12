@@ -111,11 +111,7 @@ $btn = "<button type='submit' name='btnUpdateRecord' id='btnUpdateRecord' class=
    //echo $pathUrl;
 ?>
 
-             		 <iframe src="<?php echo $pathUrl;?>" style="width:100%; height:100%;" frameborder="0"></iframe>
-
-
-
-
+     <iframe src="<?php echo $pathUrl;?>" style="width:100%; height:100%;" frameborder="0"></iframe>
              		</div>
 
 
