@@ -9,11 +9,11 @@ $protocol = isset($_SERVER["HTTPS"]) ? 'https' : 'http';
   if ($op == "add") {
     $S_ROWID = "";
     $cid = "";
-   
+
     $btn = "<button type='submit' name='btnSaveRecord' id='btnSaveRecord' class='btn btn-sm btn-success' value='$TableName'><i class='fa fa-edit'></i> Save Record</button>";
     $getColumns = $db->metaColumnNames($TableName);
     foreach ($getColumns as $key => $value) {
-       $rst[$value] = "";  
+       $rst[$value] = "";
     }
   }
   else
@@ -27,9 +27,9 @@ $rst = $rs->row($TableName,"S_ROWID='$cid'");
     }
 $S_ROWID = "<input type='hidden' name='S_ROWID' id='S_ROWID' value='$cid'>";
 $btn = "<button type='submit' name='btnUpdateRecord' id='btnUpdateRecord' class='btn btn-sm btn-success' value='$TableName'><i class='fa fa-edit'></i> Update Record</button>";
-   
+
   }
-  
+
   ?>
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -37,19 +37,19 @@ $btn = "<button type='submit' name='btnUpdateRecord' id='btnUpdateRecord' class=
 		$("#frmPageTemp").validate({
 				debug: false,
 				rules: {
-				
+
 				},
 				messages: {
-				  
+
 				},
 				submitHandler: function(form) {
 				// do other stuff for a valid form
-				 
-				$.post('assets/bin/ManageRecords.php', $("#frmPageTemp").serialize(), 
+
+				$.post('assets/bin/ManageRecords.php', $("#frmPageTemp").serialize(),
 				function(data) {
 					if (data.length < 30)
 					{
-				   
+
 					 if(op == "add")
 					 {
 					 var urlstr = $("#url").val();
@@ -64,7 +64,7 @@ $btn = "<button type='submit' name='btnUpdateRecord' id='btnUpdateRecord' class=
 					else
 					{
 					alert(data);
-				   
+
 					}
 				});
 				}
@@ -74,12 +74,12 @@ $btn = "<button type='submit' name='btnUpdateRecord' id='btnUpdateRecord' class=
                     autoclose: true,
                     format: 'dd-mm-yyyy',
                     todayHighlight: true
-                    
+
                 })
-                
+
                 .next().on(ace.click_event, function(){
                     $(this).prev().focus();
-                }); 
+                });
 	});
 </script>
 <input type="hidden" name="op" id="op" value="<?php echo $op;?>">
@@ -92,12 +92,12 @@ $btn = "<button type='submit' name='btnUpdateRecord' id='btnUpdateRecord' class=
                 <?php echo $rst["DocumentTitle"];?>
             </h4>
             <div id="pageToolBar" class="widget-toolbar no-border">
-            
+
                <a href="<?php echo $listUrl;?>" class="btn btn-xs btn-info  radius-4 bigger"> <i class="ace-icon fa fa-arrow-left bigger-80"></i> Back to List </a>
 
              </div>
           </div>
-          
+
             <?php echo $S_ROWID;?>
         <div class="widget-body">
            <div class="widget-main">
@@ -105,15 +105,16 @@ $btn = "<button type='submit' name='btnUpdateRecord' id='btnUpdateRecord' class=
              	<div class="col-sm-8">
              		<div class="table-responsive" id="documentview" style='width:100%;height:500px'>
 
-<?php 
+<?php
    $pathUrl = strtolower($protocol)."://".$_SERVER['HTTP_HOST']."/".basename(dirname(dirname(__dir__)))."/getDocIndex.php?docid=".$rst["DocID"];
+   echo $pathUrl;
 ?>
-   
+
              		 <iframe src="<?php echo $pathUrl;?>" style="width:100%; height:100%;" frameborder="0"></iframe>
-             		  	
 
 
-             		  	
+
+
              		</div>
 
 
@@ -123,13 +124,13 @@ $btn = "<button type='submit' name='btnUpdateRecord' id='btnUpdateRecord' class=
              		<form name="frmPageTemp" id="frmPageTemp" class="form-horizontal" role="form">
           	<input type="hidden" name="ModCode" id="ModCode" value="<?php echo $mod;?>">
           	<input type="hidden" name="ReturnType" id="ReturnType" value="RstID">
-          
+
             <?php echo $S_ROWID ; ?>
              <div>
             <label class="control-label " for="DocumentCategory"> Document Category</label>
                <select name="DocumentCategory" id="DocumentCategory" class="col-xs-12 col-sm-12 chosen-select">
-                 <?php 
-   
+                 <?php
+
                  $DocCategory = $rst["DocumentCategory"];
                   list($CatName,$CategoryID) = explode('-',$rst["DocumentCategory"]);
                   $getCatName = $db->GetOne("select DocumentCategory from assemblybusiness where S_ROWID='$CategoryID'");
@@ -154,8 +155,8 @@ $btn = "<button type='submit' name='btnUpdateRecord' id='btnUpdateRecord' class=
             <label class="control-label " for="DocumentDate"> Document Date </label>
               <input type="text" id="DocumentDate" name="DocumentDate" placeholder="Enter Document Date" class="col-xs-12 col-sm-12" value="<?php echo date('d-m-Y',strtotime($rst['DocumentDate']));?>"  required="true" />
           </div><hr/>
-		       
-		    
+
+
          <div class="row text-center">
               <?php echo $btn; ?>
 
@@ -168,9 +169,9 @@ $btn = "<button type='submit' name='btnUpdateRecord' id='btnUpdateRecord' class=
 
           </div><!-- End Widget-Main -->
           <div class="widget-toolbox padding-8 clearfix text-center">
-             
+
           </div>
         </div><!-- End Widget-body -->
-         
-  
+
+
 </div><!-- End WidgetBox -->
