@@ -108,7 +108,7 @@ $btn = "<button type='submit' name='btnUpdateRecord' id='btnUpdateRecord' class=
 <?php
   // $pathUrl = strtolower($protocol)."://".$_SERVER['HTTP_HOST']."/".basename(dirname(dirname(__dir__)))."/getDocIndex.php?docid=".$rst["DocID"];
   $pathUrl = strtolower($protocol)."://".$_SERVER['HTTP_HOST']."/getDocIndex.php?docid=".$rst["DocID"];
-   echo $pathUrl;
+   //echo $pathUrl;
 ?>
 
              		 <iframe src="<?php echo $pathUrl;?>" style="width:100%; height:100%;" frameborder="0"></iframe>
