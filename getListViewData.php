@@ -19,9 +19,6 @@ include("timeout.php");
 
   $userType = isset($_POST['userType']) ? $_POST['userType'] : "";
 
-
-
-
    $columns = $_POST['columns'];
    $keyCount  = 0;
     foreach ($columns as $key => $Colval) {

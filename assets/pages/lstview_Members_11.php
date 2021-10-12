@@ -8,7 +8,7 @@
   $postvals = implode(',',$pvals);
   $dateTypes = array('date','timestamp','datetime');
    $modInfo    = $rs->row("dh_modules","S_ROWID = '$mod'");
-   $db->debug=1;
+  // $db->debug=1;
  $ModuleCode = $modInfo["ModuleCode"];
 $ModuleName = $modInfo["ModuleName"];
 $TableName = $modInfo["TableName"];
@@ -150,9 +150,9 @@ $getCols = $db->GetArray("select FieldName,DisplayName,searchable from dh_listvi
             error: function(xhr, textStatus, errorThrown){  // error handling code
               //$("#tblListView_processing").css("display","none");
               //alert(JSON.stringify(data));
-              alert(errorThrown);
+              //alert(errorThrown);
               alert(JSON.stringify(xhr));
-              alert(textStatus);
+              //alert(textStatus);
             }
           }
 
