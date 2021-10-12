@@ -5,7 +5,7 @@
   error_reporting(E_ALL);
   ini_set('display_errors', 1);
 
-  $url = "https://ebusiness.siayaassembly.go.ke/";
+  $url = "https://ebusiness.siayaassembly.go.ke";
 
 
   $method = isset($_POST["Method"]) ? $_POST["Method"] : "";
