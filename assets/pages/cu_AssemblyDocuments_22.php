@@ -106,7 +106,8 @@ $btn = "<button type='submit' name='btnUpdateRecord' id='btnUpdateRecord' class=
              		<div class="table-responsive" id="documentview" style='width:100%;height:500px'>
 
 <?php
-   $pathUrl = strtolower($protocol)."://".$_SERVER['HTTP_HOST']."/".basename(dirname(dirname(__dir__)))."/getDocIndex.php?docid=".$rst["DocID"];
+  // $pathUrl = strtolower($protocol)."://".$_SERVER['HTTP_HOST']."/".basename(dirname(dirname(__dir__)))."/getDocIndex.php?docid=".$rst["DocID"];
+  $pathUrl = strtolower($protocol)."://".$_SERVER['HTTP_HOST']."/getDocIndex.php?docid=".$rst["DocID"];
    echo $pathUrl;
 ?>
 
